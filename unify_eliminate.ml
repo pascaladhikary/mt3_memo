@@ -12,12 +12,12 @@ let rec unify constraints =
       (match s with 
       
       | TyVar n -> (* Eliminate *)
-      if occurs n t then None else
-			      let r = List.map(fun(t1, t2)->(monoTy_lift_subst [n,t] t1, monoTy_lift_subst [n,t] t2)) rem_constraints
-			      in
-			      (match unify r 
-				        with None -> None
-				        | Some phi ->Some((n, monoTy_lift_subst phi t)::phi))
+      	if occurs n t then None else
+	      let r = List.map(fun(t1, t2)->(monoTy_lift_subst [n,t] t1, monoTy_lift_subst [n,t] t2)) rem_constraints
+	      in
+	      (match unify r 
+			with None -> None
+			| Some phi ->Some((n, monoTy_lift_subst phi t)::phi))
 
       | TyConst(c, args) ->  (* Orient and Decompose *)
         (match t with 
